@@ -1,0 +1,57 @@
+{
+    "name": "datashaman/anvil",
+    "description": "Artisan on the web",
+    "keywords": [
+        "datashaman",
+        "artisan",
+        "commands",
+        "console"
+    ],
+    "homepage": "https://github.com/datashaman/anvil",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Marlin Forbes",
+            "email": "marlinf@datashaman.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "illuminate/console": "^5.8.15|^6.0",
+        "illuminate/contracts": "^5.8.15|^6.0",
+        "illuminate/support": "^5.8.15|^6.0",
+        "symfony/finder": "^4.2"
+    },
+    "require-dev": {
+        "orchestra/testbench": "3.8.*|4.*",
+        "phpunit/phpunit": "^8.4"
+
+    },
+    "autoload": {
+        "psr-4": {
+            "Datashaman\\Anvil\\": "src"
+        },
+        "files": [
+            "src/Helpers/functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Datashaman\\Anvil\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Datashaman\\Anvil\\AnvilServiceProvider"
+            ]
+        }
+    }
+}
