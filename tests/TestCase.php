@@ -2,14 +2,9 @@
 
 namespace Datashaman\Anvil\Tests;
 
-use Illuminate\Contracts\Console\Kernel;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Storage;
-use Orchestra\Testbench\TestCase as Orchestra;
 use Datashaman\Anvil\AnvilServiceProvider;
+use Illuminate\Foundation\Application;
+use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
 {
