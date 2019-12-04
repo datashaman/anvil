@@ -31,10 +31,7 @@
     "autoload": {
         "psr-4": {
             "Datashaman\\Anvil\\": "src"
-        },
-        "files": [
-            "src/Helpers/functions.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
