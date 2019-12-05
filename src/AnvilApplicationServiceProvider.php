@@ -25,6 +25,7 @@ class AnvilApplicationServiceProvider extends ServiceProvider
     protected function authorization()
     {
         $this->gate();
+
         Anvil::auth(function ($request) {
             return app()->environment('local') ||
                    Gate::check('viewAnvil', [$request->user()]);

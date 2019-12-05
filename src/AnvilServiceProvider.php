@@ -65,12 +65,9 @@ class AnvilServiceProvider extends ServiceProvider
             __DIR__  . '/../config/anvil.php', 'anvil'
         );
 
-        $this->app->singleton(
-            'anvil',
-            function ($app) {
-                return new AnvilService($this->app, config('anvil'));
-            }
-        );
+        $this->commands([
+            Console\InstallCommand::class,
+            Console\PublishCommand::class,
+        ]);
     }
-
 }

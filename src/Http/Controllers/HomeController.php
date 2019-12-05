@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Telescope\Http\Controllers;
+namespace Datashaman\Anvil\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Datashaman\Anvil\Anvil;

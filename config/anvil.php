@@ -1,6 +1,6 @@
 <?php
 
-use Laravel\Anvil\Http\Middleware\Authorize;
+use Datashaman\Anvil\Http\Middleware\Authorize;
 
 return [
 
@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'path' => env('ANVIL_PATH', 'telescope'),
+    'path' => env('ANVIL_PATH', 'anvil'),
 
     /*
     |--------------------------------------------------------------------------
