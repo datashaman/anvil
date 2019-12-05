@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="vendor/autoload.php"
-         backupGlobals="false"
+<phpunit backupGlobals="false"
          backupStaticAttributes="false"
+         beStrictAboutTestsThatDoNotTestAnything="true"
+         bootstrap="vendor/autoload.php"
          colors="true"
-         verbose="true"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
          convertWarningsToExceptions="true"
          processIsolation="false"
-         stopOnFailure="false">
+         stopOnError="false"
+         stopOnFailure="false"
+         verbose="true"
+>
     <testsuites>
         <testsuite name="Anvil Test Suite">
-            <directory>tests</directory>
+            <directory suffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>
     <filter>
-        <whitelist>
-            <directory suffix=".php">src/</directory>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src</directory>
         </whitelist>
     </filter>
     <php>
-        <!--<env name="APP_NAME" value="mysite"/>-->
+        <env name="APP_ENV" value="self-testing"/>
+        <env name="APP_KEY" value="base64:Mvo8BnWklTOV/6fGvkf2d/YnGQwTwfrdojHGNekC434="/>
+        <env name="CACHE_DRIVER" value="file"/>
     </php>
 </phpunit>

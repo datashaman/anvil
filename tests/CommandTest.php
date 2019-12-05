@@ -2,12 +2,20 @@
 
 namespace Datashaman\Anvil\Tests;
 
-use Datashaman\Anvil\AnvilFacade as Anvil;
-
 class CommandTest extends TestCase
 {
-    public function testShit()
+    public function setUp(): void
     {
-        $this->artisan('app:acommand');
+        parent::setUp();
+
+        $this->withoutMiddleware([Authorize::class, VerifyCsrfToken::class]);
+    }
+
+    public function testNamedRoute()
+    {
+        $this->assertEquals(
+            url(config('anvil.path')),
+            route('anvil')
+        );
     }
 }

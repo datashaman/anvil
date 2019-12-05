@@ -2,7 +2,6 @@
 
 namespace Datashaman\Anvil\Tests;
 
-use Datashaman\Anvil\AnvilFacade;
 use Datashaman\Anvil\AnvilServiceProvider;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Application;
@@ -22,16 +21,15 @@ abstract class TestCase extends Orchestra
         ];
     }
 
-    /**
-     * @param Application $app
-     *
-     * @return array
-     */
-    protected function getPackageAliases($app)
+    protected function resolveApplicationCore($app)
     {
-        return [
-            'Anvil' => AnvilFacade::class,
-        ];
+        parent::resolveApplicationCore($app);
+
+        $app->detectEnvironment(
+            function () {
+                return 'self-testing';
+            }
+        );
     }
 
     protected function resolveApplicationConsoleKernel($app)
@@ -44,11 +42,16 @@ abstract class TestCase extends Orchestra
      */
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('anvil', [
-            'commands' => [
+        $config = $app->get('config');
+
+        $config->set('logging.default', 'errorlog');
+
+        $config->set(
+            'anvil.commands',
+            [
                 Console\ACommand::class,
                 Console\BCommand::class,
-            ],
-        ]);
+            ]
+        );
     }
 }

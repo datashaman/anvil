@@ -2,6 +2,7 @@
 
 namespace Datashaman\Anvil;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class AnvilServiceProvider extends ServiceProvider
@@ -14,7 +15,7 @@ class AnvilServiceProvider extends ServiceProvider
 
         Route::middlewareGroup(
             'anvil',
-            config('anvil.midldeware', [])
+            config('anvil.middleware', [])
         );
 
         $this->registerRoutes();
