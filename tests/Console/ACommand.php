@@ -1,15 +1,15 @@
 <?php
 
-namespace Datashaman\Anvil\Tests\Commands;
+namespace Datashaman\Anvil\Tests\Console;
 
 use Illuminate\Console\Command;
 
-class BCommand extends Command
+class ACommand extends Command
 {
     /**
      * @var string
      */
-    protected $signature = 'app:bcommand
+    protected $signature = 'app:acommand
         {--option}
         {--optionalDefault=default}
         {--optionalValue=}

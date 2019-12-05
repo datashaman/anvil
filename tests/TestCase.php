@@ -36,7 +36,7 @@ abstract class TestCase extends Orchestra
 
     protected function resolveApplicationConsoleKernel($app)
     {
-        $app->singleton(Kernel::class, ConsoleKernel::class);
+        $app->singleton(Kernel::class, Console\Kernel::class);
     }
 
     /**
@@ -46,8 +46,8 @@ abstract class TestCase extends Orchestra
     {
         $app['config']->set('anvil', [
             'commands' => [
-                Commands\ACommand::class,
-                Commands\BCommand::class,
+                Console\ACommand::class,
+                Console\BCommand::class,
             ],
         ]);
     }

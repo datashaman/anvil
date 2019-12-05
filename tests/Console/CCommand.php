@@ -1,6 +1,6 @@
 <?php
 
-namespace Datashaman\Anvil\Tests\Commands;
+namespace Datashaman\Anvil\Tests\Console;
 
 use Illuminate\Console\Command;
 
