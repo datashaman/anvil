@@ -41,7 +41,7 @@
          * Prepare the component.
          */
         mounted() {
-            document.title = this.title + " - Telescope";
+            document.title = this.title + " - Anvil";
 
             this.familyHash = this.$route.query.family_hash || '';
 
@@ -105,7 +105,7 @@
 
         methods: {
             loadEntries(after){
-                axios.post(Telescope.basePath + '/telescope-api/' + this.resource +
+                axios.post(Anvil.basePath + '/anvil-api/' + this.resource +
                         '?tag=' + this.tag +
                         '&before=' + this.lastEntryIndex +
                         '&take=' + this.entriesPerRequest +
@@ -131,7 +131,7 @@
              */
             checkForNewEntries(){
                 this.newEntriesTimeout = setTimeout(() => {
-                    axios.post(Telescope.basePath + '/telescope-api/' + this.resource +
+                    axios.post(Anvil.basePath + '/anvil-api/' + this.resource +
                             '?tag=' + this.tag +
                             '&take=1' +
                             '&family_hash=' + this.familyHash
@@ -228,7 +228,7 @@
                     let uuids = _.chain(this.entries).filter(entry => entry.content.status === 'pending').map('id').value();
 
                     if (uuids.length) {
-                        axios.post(Telescope.basePath + '/telescope-api/' + this.resource, {
+                        axios.post(Anvil.basePath + '/anvil-api/' + this.resource, {
                             uuids: uuids
                         }).then(response => {
                             this.recordingStatus = response.data.status;
@@ -279,8 +279,8 @@
             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20px" height="20px" viewBox="0 0 90 90" class="mr-2">
                 <path fill="#FFFFFF" d="M45 0C20.1 0 0 20.1 0 45s20.1 45 45 45 45-20.1 45-45S69.9 0 45 0zM45 74.5c-3.6 0-6.5-2.9-6.5-6.5s2.9-6.5 6.5-6.5 6.5 2.9 6.5 6.5S48.6 74.5 45 74.5zM52.1 23.9l-2.5 29.6c0 2.5-2.1 4.6-4.6 4.6 -2.5 0-4.6-2.1-4.6-4.6l-2.5-29.6c-0.1-0.4-0.1-0.7-0.1-1.1 0-4 3.2-7.2 7.2-7.2 4 0 7.2 3.2 7.2 7.2C52.2 23.1 52.2 23.5 52.1 23.9z"></path>
             </svg>
-            <span class="ml-1" v-if="recordingStatus == 'disabled'">Telescope is currently disabled.</span>
-            <span class="ml-1" v-if="recordingStatus == 'paused'">Telescope recording is paused.</span>
+            <span class="ml-1" v-if="recordingStatus == 'disabled'">Anvil is currently disabled.</span>
+            <span class="ml-1" v-if="recordingStatus == 'paused'">Anvil recording is paused.</span>
             <span class="ml-1" v-if="recordingStatus == 'off'">This watcher is turned off.</span>
         </p>
 

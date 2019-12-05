@@ -75,7 +75,7 @@
 
         methods: {
             prepareEntry() {
-                document.title = this.title + " - Telescope";
+                document.title = this.title + " - Anvil";
                 this.ready = false;
 
                 let unwatch = this.$watch('ready', newVal => {
@@ -100,7 +100,7 @@
 
 
             loadEntry(after){
-                axios.get(Telescope.basePath + '/telescope-api/' + this.resource + '/' + this.id).then(response => {
+                axios.get(Anvil.basePath + '/anvil-api/' + this.resource + '/' + this.id).then(response => {
                     if (_.isFunction(after)) {
                         after(response);
                     }

@@ -19,7 +19,7 @@
             resolveException(entry) {
                 this.alertConfirm('Are you sure you want to resolve this exception?', () => {
 
-                    axios.put(Telescope.basePath + '/telescope-api/exceptions/' + entry.id, {
+                    axios.put(Anvil.basePath + '/anvil-api/exceptions/' + entry.id, {
                         'resolved_at': 'now',
                     }).then(response => {
                         this.entry = response.data.entry;

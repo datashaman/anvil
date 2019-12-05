@@ -3,8 +3,8 @@ import moment from 'moment-timezone';
 
 export default {
     computed: {
-        Telescope() {
-            return Telescope;
+        Anvil() {
+            return Anvil;
         },
     },
 
