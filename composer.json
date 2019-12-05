@@ -38,9 +38,6 @@
             "Datashaman\\Anvil\\Tests\\": "tests"
         }
     },
-    "scripts": {
-        "test": "vendor/bin/phpunit"
-    },
     "config": {
         "sort-packages": true
     },
@@ -48,7 +45,10 @@
         "laravel": {
             "providers": [
                 "Datashaman\\Anvil\\AnvilServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "Anvil": "Datashaman\\Anvil\\AnvilFacade"
+            }
         }
     }
 }
