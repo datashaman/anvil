@@ -36,7 +36,7 @@ class AuthorizationTest extends TestCase
 
     public function test_clean_anvil_installation_denies_access_by_default()
     {
-        $this->post('/anvil/anvil-api/requests')
+        $this->post('/anvil/anvil-api/commands')
             ->assertStatus(403);
     }
 
@@ -44,7 +44,7 @@ class AuthorizationTest extends TestCase
     {
         $this->actingAs(new Authenticated);
 
-        $this->post('/anvil/anvil-api/requests')
+        $this->post('/anvil/anvil-api/commands')
             ->assertStatus(403);
     }
 
@@ -58,7 +58,7 @@ class AuthorizationTest extends TestCase
             return true;
         });
 
-        $this->post('/anvil/anvil-api/requests')
+        $this->post('/anvil/anvil-api/commands')
             ->assertStatus(403);
     }
 
@@ -74,7 +74,7 @@ class AuthorizationTest extends TestCase
             return $user->getAuthIdentifier() === 'anvil-test';
         });
 
-        $this->post('/anvil/anvil-api/requests')
+        $this->post('/anvil/anvil-api/commands')
             ->assertStatus(200);
     }
 
@@ -88,27 +88,27 @@ class AuthorizationTest extends TestCase
             return true;
         });
 
-        $this->post('/anvil/anvil-api/requests')
+        $this->post('/anvil/anvil-api/commands')
             ->assertStatus(200);
     }
 
-    public function test_unauthorized_requests()
+    public function test_unauthorized_commands()
     {
         Anvil::auth(function () {
             return false;
         });
 
-        $this->get('/anvil/anvil-api/requests')
+        $this->get('/anvil/anvil-api/commands')
             ->assertStatus(403);
     }
 
-    public function test_authorized_requests()
+    public function test_authorized_commands()
     {
         Anvil::auth(function () {
             return true;
         });
 
-        $this->post('/anvil/anvil-api/requests')
+        $this->post('/anvil/anvil-api/commands')
             ->assertSuccessful();
     }
 }
