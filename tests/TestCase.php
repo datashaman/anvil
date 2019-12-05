@@ -49,8 +49,8 @@ abstract class TestCase extends Orchestra
         $config->set(
             'anvil.commands',
             [
-                Console\ACommand::class,
-                Console\BCommand::class,
+                'app:acommand',
+                'app:bcommand',
             ]
         );
     }
