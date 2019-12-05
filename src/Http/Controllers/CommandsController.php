@@ -23,8 +23,8 @@ class CommandsController extends Controller
     public function index()
     {
         $commands = collect($this->kernel->all())
-            ->only(config('anvil.commands'));
+                                 ->only(config('anvil.commands'));
 
-        dd($commands);
+        return response()->json($commands);
     }
 }
