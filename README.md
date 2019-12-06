@@ -8,3 +8,21 @@
 
 
 Artisan commands on the web.
+
+## installation
+
+You may use Composer to install Anvil into your Laravel project:
+
+    composer require datashaman/anvil
+
+After installing Anvil, publish its assets using the anvil:install Artisan command.
+
+    php artisan anvil:install
+
+When updating Anvil, you should re-publish Anvil's assets:
+
+    php artisan anvil:publish
+
+## usage
+
+Open `/anvil` URL in your application.
