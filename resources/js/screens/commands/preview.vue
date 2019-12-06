@@ -21,13 +21,6 @@
                     {{slotProps.entry.content.command}}
                 </td>
             </tr>
-
-            <tr>
-                <td class="table-fit font-weight-bold">Exit Code</td>
-                <td>
-                    {{slotProps.entry.content.exit_code}}
-                </td>
-            </tr>
         </template>
 
         <div slot="after-attributes-card" slot-scope="slotProps">
