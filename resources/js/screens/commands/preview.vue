@@ -73,11 +73,12 @@
                                 <div v-if="field.type == 'argument' || field.acceptValue" class="form-group">
                                     <label :for="field.name">{{ field.name }}</label>
                                     <input type="text" :id="field.name" class="form-control" :name="field.name" :value="field.default" :required="field.required" />
-                                    <small v-if="field.help" class="form-text text-muted">{{ field.help }}</small>
+                                    <small v-if="field.description" class="form-text text-muted">{{ field.description }}</small>
                                 </div>
                                 <div v-if="field.type == 'option' && !field.acceptValue" class="form-check">
                                     <input type="checkbox" :id="field.name" class="form-check-input" />
                                     <label :for="field.name" class="form-check-label">{{ field.name }}</label>
+                                    <small v-if="field.description" class="form-text text-muted">{{ field.description }}</small>
                                 </div>
                             </template>
 
