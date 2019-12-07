@@ -16,6 +16,13 @@ class Anvil
     public static $useDarkTheme = false;
 
     /**
+     * Indicates if Anvil migrations will be run.
+     *
+     * @var bool
+     */
+    public static $runsMigrations = true;
+
+    /**
      * Specifies that Anvil should use the dark theme.
      *
      * @return static
@@ -38,6 +45,18 @@ class Anvil
             'path' => config('anvil.path'),
             'timezone' => config('app.timezone'),
         ];
+    }
+
+    /**
+     * Configure Anvil to not register its migrations.
+     *
+     * @return static
+     */
+    public static function ignoreMigrations()
+    {
+        static::$runsMigrations = false;
+
+        return new static;
     }
 
     /**

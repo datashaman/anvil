@@ -19,6 +19,7 @@ class AnvilServiceProvider extends ServiceProvider
         );
 
         $this->registerRoutes();
+        $this->registerMigrations();
         $this->registerPublishing();
 
         $this->loadViewsFrom(
@@ -27,6 +28,9 @@ class AnvilServiceProvider extends ServiceProvider
         );
     }
 
+    /**
+     * Register the package routes.
+     */
     private function registerRoutes()
     {
         Route::group($this->routeConfiguration(), function () {
@@ -34,7 +38,12 @@ class AnvilServiceProvider extends ServiceProvider
         });
     }
 
-    private function routeConfiguration()
+    /**
+     * Get the Anvil route group configuration array.
+     *
+     * @return array
+     */
+    private function routeConfiguration(): array
     {
         return [
             'domain' => config('anvil.domain', null),
@@ -44,9 +53,24 @@ class AnvilServiceProvider extends ServiceProvider
         ];
     }
 
+    /**
+     * Register the package's migrations.
+     *
+     * @return void
+     */
+    private function registerMigrations()
+    {
+        if ($this->app->runningInConsole() && $this->shouldMigrate()) {
+            $this->loadMigrationsFrom(__DIR__.'/../migrations');
+        }
+    }
+
     private function registerPublishing()
     {
         if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../migrations' => database_path('migrations'),
+            ], 'anvil-migrations');
             $this->publishes([
                 __DIR__.'/../public' => public_path('vendor/anvil'),
             ], 'anvil-assets');
@@ -70,5 +94,15 @@ class AnvilServiceProvider extends ServiceProvider
             Console\InstallCommand::class,
             Console\PublishCommand::class,
         ]);
+    }
+
+    /**
+     * Determine if we should register the migrations.
+     *
+     * @return bool
+     */
+    protected function shouldMigrate()
+    {
+        return Anvil::$runsMigrations;
     }
 }
