@@ -24,6 +24,7 @@
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.15.2",
         "sass-loader": "^7.1.0",
+        "serialize-javascript": ">=2.1.1",
         "sql-formatter": "^2.3.1",
         "vue": "^2.5.7",
         "vue-json-pretty": "^1.6.2",
