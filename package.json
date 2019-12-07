@@ -24,6 +24,8 @@
         "moment": "^2.10.6",
         "moment-timezone": "^0.5.21",
         "popper.js": "^1.12",
+        "prettier": "^1.19.1",
+        "pretty-quick": "^2.0.1",
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.15.2",
         "sass-loader": "^7.1.0",
@@ -34,12 +36,12 @@
         "vue-router": "^3.0.1",
         "vue-template-compiler": "^2.5.21"
     },
-    "scripts": {
-        "pretest": "./node_modules/.bin/eslint . --fix"
-    },
     "husky": {
         "hooks": {
-            "pre-commit": "npm run pretest"
+            "pre-commit": [
+                "pretty-quick --staged",
+                "eslint . --fix"
+            ]
         }
     }
 }
