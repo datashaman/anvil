@@ -44,6 +44,9 @@ class Anvil
         return [
             'path' => config('anvil.path'),
             'timezone' => config('app.timezone'),
+            'routes' => [
+                'runs_store' => route('runs.store', ['command' => '%command%']),
+            ],
         ];
     }
 

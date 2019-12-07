@@ -2,11 +2,29 @@
 import axios from 'axios';
 
 export default {
-    data(){
+    data() {
         return {
             entry: null,
+            form: {},
             currentTab: 'form'
         };
+    },
+    methods: {
+        handleSubmit(evt) {
+            let url = window.Anvil.routes.runs_store.replace('%command%', this.entry.content.command);
+
+            axios({
+                method: 'post',
+                url: url,
+                data: this.form
+            })
+            .then(function (response) {
+                this.alertSuccess(response.data.entry.output);
+            }.bind(this))
+            .catch(function (error) {
+                console.error(error);
+            });
+        }
     }
 }
 </script>
@@ -111,7 +129,7 @@ export default {
                         ></vue-json-pretty>
                     </div>
                     <div class="p-4 mb-0" v-show="currentTab == 'form'">
-                        <form>
+                        <form @submit.prevent="handleSubmit">
                             <template
                                 v-for="field in slotProps.entry.content.form"
                             >
@@ -126,11 +144,11 @@ export default {
                                         field.label
                                     }}</label>
                                     <input
+                                        v-model="form[field.name]"
                                         type="text"
                                         :id="field.name"
                                         class="form-control"
                                         :name="field.name"
-                                        :value="field.default"
                                         :required="field.required"
                                     />
                                     <small
@@ -147,6 +165,7 @@ export default {
                                     class="form-check"
                                 >
                                     <input
+                                        v-model="form[field.name]"
                                         type="checkbox"
                                         :id="field.name"
                                         class="form-check-input"

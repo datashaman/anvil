@@ -37,6 +37,15 @@ class Run extends Model
     ];
 
     /**
+     * @var array
+     */
+    protected $fillable = [
+        'command',
+        'input',
+        'uuid',
+    ];
+
+    /**
      * The primary key for the model.
      *
      * @var string

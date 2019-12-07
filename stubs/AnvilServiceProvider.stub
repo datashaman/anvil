@@ -16,14 +16,6 @@ class AnvilServiceProvider extends AnvilApplicationServiceProvider
     public function register()
     {
         // Anvil::night();
-
-        Anvil::filter(function (IncomingEntry $entry) {
-            if ($this->app->isLocal()) {
-                return true;
-            }
-
-            return false;
-        });
     }
 
     /**

@@ -2,12 +2,27 @@
 
 namespace Datashaman\Anvil\Http\Controllers;
 
+use Datashaman\Anvil\AnvilService;
+use Datashaman\Anvil\Run;
 use Illuminate\Console\Command;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Str;
+use Symfony\Component\Console\Output\BufferedOutput;
 
 class RunsController extends Controller
 {
+    /**
+     * @param AnvilService $service
+     */
+    public function __construct(AnvilService $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * @param string $command
      *
@@ -25,6 +40,53 @@ class RunsController extends Controller
      */
     public function store(Request $request, string $command): JsonResponse
     {
+        $command = $this->service->getCommand($command);
+
+        $input = collect(Arr::get($command, 'content.form'))
+            ->reduce(
+                function ($input, $field) use ($request) {
+                    if ($request->has($field['name'])) {
+                        $key = $field['name'];
+
+                        if ($field['type'] === 'option') {
+                            $key = "--$key";
+                        }
+
+                        $input[$key] = $request->get($field['name']);
+                    }
+
+                    return $input;
+                },
+                []
+            );
+
+        $run = Run::create(
+            [
+                'uuid' => Str::orderedUuid(),
+                'command' => $command['id'],
+                'input' => $input,
+            ]
+        );
+
+        if (!$run->exists) {
+            return response()->json(
+                [
+                    'error' => 'Cannot store new run',
+                    'status' => 'error',
+                ]
+            );
+        }
+
+        $output = new BufferedOutput();
+        $run->exit_code = Artisan::call($command['id'], $input, $output);
+        $run->output = $output->fetch();
+        $run->save();
+
+        return response()->json(
+            [
+                'entry' => $run,
+            ]
+        );
     }
 
     /**

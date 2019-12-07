@@ -98,7 +98,7 @@ export default {
 
     methods: {
         loadEntries(after){
-            axios.post(Anvil.basePath + '/anvil-api/' + this.resource +
+            axios.get(Anvil.basePath + '/anvil-api/' + this.resource +
                     '?tag=' + this.tag +
                     '&before=' + this.lastEntryIndex +
                     '&take=' + this.entriesPerRequest +
