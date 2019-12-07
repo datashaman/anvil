@@ -1,49 +1,52 @@
-import Vue from 'vue';
-import Base from './base';
-import axios from 'axios';
-import Routes from './routes';
-import VueRouter from 'vue-router';
-import VueJsonPretty from 'vue-json-pretty';
-import moment from 'moment-timezone';
+import Vue from "vue";
+import Base from "./base";
+import axios from "axios";
+import Routes from "./routes";
+import VueRouter from "vue-router";
+import VueJsonPretty from "vue-json-pretty";
+import moment from "moment-timezone";
 
-require('bootstrap');
+require("bootstrap");
 
 let token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-    axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    axios.defaults.headers.common["X-CSRF-TOKEN"] = token.content;
 }
 
 Vue.use(VueRouter);
 
-window.Popper = require('popper.js').default;
+window.Popper = require("popper.js").default;
 
 moment.tz.setDefault(window.Anvil.timezone);
 
-window.Anvil.basePath = '/' + window.Anvil.path;
+window.Anvil.basePath = "/" + window.Anvil.path;
 
-let routerBasePath = window.Anvil.basePath + '/';
+let routerBasePath = window.Anvil.basePath + "/";
 
-if (window.Anvil.path === '' || window.Anvil.path === '/') {
-    routerBasePath = '/';
-    window.Anvil.basePath = '';
+if (window.Anvil.path === "" || window.Anvil.path === "/") {
+    routerBasePath = "/";
+    window.Anvil.basePath = "";
 }
 
 const router = new VueRouter({
     routes: Routes,
-    mode: 'history',
-    base: routerBasePath,
+    mode: "history",
+    base: routerBasePath
 });
 
-Vue.component('vue-json-pretty', VueJsonPretty);
-Vue.component('index-screen', require('./components/IndexScreen.vue').default);
-Vue.component('preview-screen', require('./components/PreviewScreen.vue').default);
-Vue.component('alert', require('./components/Alert.vue').default);
+Vue.component("vue-json-pretty", VueJsonPretty);
+Vue.component("index-screen", require("./components/IndexScreen.vue").default);
+Vue.component(
+    "preview-screen",
+    require("./components/PreviewScreen.vue").default
+);
+Vue.component("alert", require("./components/Alert.vue").default);
 
 Vue.mixin(Base);
 
 new Vue({
-    el: '#anvil',
+    el: "#anvil",
 
     router,
 
@@ -52,10 +55,10 @@ new Vue({
             alert: {
                 type: null,
                 autoClose: 0,
-                message: '',
+                message: "",
                 confirmationProceed: null,
-                confirmationCancel: null,
-            },
+                confirmationCancel: null
+            }
         };
     },
 
@@ -68,6 +71,6 @@ new Vue({
                 this.autoLoadsNewEntries = false;
                 localStorage.autoLoadsNewEntries = 0;
             }
-        },
-    },
+        }
+    }
 });

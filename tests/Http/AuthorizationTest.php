@@ -2,12 +2,12 @@
 
 namespace Datashaman\Anvil\Tests\Http;
 
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Datashaman\Anvil\Anvil;
 use Datashaman\Anvil\AnvilApplicationServiceProvider;
 use Datashaman\Anvil\Tests\TestCase;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Orchestra\Testbench\Http\Middleware\VerifyCsrfToken;
 
 class AuthorizationTest extends TestCase

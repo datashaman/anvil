@@ -62,7 +62,8 @@ class AnvilServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(
-            __DIR__  . '/../config/anvil.php', 'anvil'
+            __DIR__  . '/../config/anvil.php',
+            'anvil'
         );
 
         $this->commands([

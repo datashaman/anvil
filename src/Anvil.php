@@ -2,15 +2,7 @@
 
 namespace Datashaman\Anvil;
 
-use Closure;
-use Exception;
-use Illuminate\Contracts\Debug\ExceptionHandler;
-use Illuminate\Log\Events\MessageLogged;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
-use Symfony\Component\Debug\Exception\FatalThrowableError;
-use Throwable;
 
 class Anvil
 {
