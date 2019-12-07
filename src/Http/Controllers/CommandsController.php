@@ -36,6 +36,11 @@ class CommandsController extends Controller
                     return $command instanceof Command;
                 }
             )
+            ->reject(
+                function ($command) {
+                    return $command->isHidden();
+                }
+            )
             ->sortBy(
                 function ($command) {
                     return $command->getName();
@@ -111,6 +116,7 @@ class CommandsController extends Controller
             'content' => [
                 'command' => $name,
                 'description' => $command->getDescription(),
+                'help' => $command->getHelp(),
                 'options' => $definition->getOptions(),
                 'arguments' => $definition->getArguments(),
                 'synopsis' => $definition->getSynopsis(),
