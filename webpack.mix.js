@@ -1,7 +1,7 @@
-const mix = require('laravel-mix');
-const path = require('path');
-const webpack = require('webpack');
-const __dirname = path.resolve();
+const mix = require("laravel-mix");
+const path = require("path");
+const process = require("process");
+const webpack = require("webpack");
 
 /*
  |--------------------------------------------------------------------------
@@ -18,23 +18,23 @@ mix.options({
     terser: {
         terserOptions: {
             compress: {
-                drop_console: true,
-            },
-        },
-    },
+                drop_console: true
+            }
+        }
+    }
 })
-    .setPublicPath('public')
-    .js('resources/js/app.js', 'public')
-    .sass('resources/sass/app.scss', 'public')
-    .sass('resources/sass/app-dark.scss', 'public')
+    .setPublicPath("public")
+    .js("resources/js/app.js", "public")
+    .sass("resources/sass/app.scss", "public")
+    .sass("resources/sass/app-dark.scss", "public")
     .version()
-    .copy('public', '../anviltest/public/vendor/anvil')
+    .copy("public", "../anviltest/public/vendor/anvil")
     .webpackConfig({
         resolve: {
             symlinks: false,
             alias: {
-                '@': path.resolve(__dirname, 'resources/js/'),
-            },
+                "@": path.resolve(process.env.PWD, "resources/js/")
+            }
         },
-        plugins: [new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)],
+        plugins: [new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)]
     });
