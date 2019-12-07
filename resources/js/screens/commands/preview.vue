@@ -70,12 +70,12 @@
                     <div class="p-4 mb-0" v-show="currentTab=='form'">
                         <form>
                             <template v-for="field in slotProps.entry.content.form">
-                                <div v-if="field.acceptValue" class="form-group">
+                                <div v-if="field.type == 'argument' || field.acceptValue" class="form-group">
                                     <label :for="field.name">{{ field.name }}</label>
                                     <input type="text" :id="field.name" class="form-control" :name="field.name" :value="field.default" :required="field.required" />
                                     <small v-if="field.help" class="form-text text-muted">{{ field.help }}</small>
                                 </div>
-                                <div v-else class="form-check">
+                                <div v-if="field.type == 'option' && !field.acceptValue" class="form-check">
                                     <input type="checkbox" :id="field.name" class="form-check-input" />
                                     <label :for="field.name" class="form-check-label">{{ field.name }}</label>
                                 </div>
