@@ -5,8 +5,7 @@
         data(){
             return {
                 entry: null,
-                batch: [],
-                    currentTab: 'arguments'
+                currentTab: 'form'
             };
         }
     }
@@ -71,13 +70,13 @@
                         <form>
                             <template v-for="field in slotProps.entry.content.form">
                                 <div v-if="field.type == 'argument' || field.acceptValue" class="form-group">
-                                    <label :for="field.name">{{ field.name }}</label>
+                                    <label :for="field.name">{{ field.label }}</label>
                                     <input type="text" :id="field.name" class="form-control" :name="field.name" :value="field.default" :required="field.required" />
                                     <small v-if="field.description" class="form-text text-muted">{{ field.description }}</small>
                                 </div>
                                 <div v-if="field.type == 'option' && !field.acceptValue" class="form-check">
                                     <input type="checkbox" :id="field.name" class="form-check-input" />
-                                    <label :for="field.name" class="form-check-label">{{ field.name }}</label>
+                                    <label :for="field.name" class="form-check-label">{{ field.label }}</label>
                                     <small v-if="field.description" class="form-text text-muted">{{ field.description }}</small>
                                 </div>
                             </template>

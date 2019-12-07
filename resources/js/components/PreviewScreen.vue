@@ -18,11 +18,7 @@
         data() {
             return {
                 entry: null,
-                batch: null,
                 ready: false,
-
-                updateEntryTimeout: null,
-                updateEntryTimer: 2500,
             };
         },
 
@@ -51,15 +47,6 @@
 
 
         computed: {
-            job() {
-                return _.find(this.batch, {type: 'job'})
-            },
-
-            request() {
-                return _.find(this.batch, {type: 'request'})
-            },
-
-
             command() {
                 return _.find(this.batch, {type: 'command'})
             },
@@ -87,10 +74,8 @@
 
                 this.loadEntry((response) => {
                     this.entry = response.data.entry;
-                    this.batch = response.data.batch;
 
                     this.$parent.entry = response.data.entry;
-                    this.$parent.batch = response.data.batch;
 
                     this.ready = true;
 
@@ -120,10 +105,8 @@
                 this.updateEntryTimeout = setTimeout(() => {
                     this.loadEntry((response) => {
                         this.entry = response.data.entry;
-                        this.batch = response.data.batch;
 
                         this.$parent.entry = response.data.entry;
-                        this.$parent.batch = response.data.batch;
 
                         this.ready = true;
                     });
