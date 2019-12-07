@@ -21,6 +21,12 @@
                     {{slotProps.entry.content.command}}
                 </td>
             </tr>
+            <tr>
+                <td class="table-fit font-weight-bold">Command</td>
+                <td>
+                    {{slotProps.entry.content.synopsis}}
+                </td>
+            </tr>
         </template>
 
         <div slot="after-attributes-card" slot-scope="slotProps">
@@ -32,6 +38,9 @@
                     <li class="nav-item">
                         <a class="nav-link" :class="{active: currentTab=='options'}" href="#" v-on:click.prevent="currentTab='options'">Options</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" :class="{active: currentTab=='form'}" href="#" v-on:click.prevent="currentTab='form'">Form</a>
+                    </li>
                 </ul>
                 <div>
                     <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='arguments'">
@@ -39,6 +48,9 @@
                     </div>
                     <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='options'">
                         <vue-json-pretty :data="slotProps.entry.content.options"></vue-json-pretty>
+                    </div>
+                    <div class="code-bg p-4 mb-0 text-white" v-show="currentTab=='form'">
+                        <vue-json-pretty :data="slotProps.entry.content.form"></vue-json-pretty>
                     </div>
                 </div>
             </div>

@@ -2,8 +2,12 @@
 
 namespace Datashaman\Anvil\Http\Controllers;
 
+use Illuminate\Console\Command;
 use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Collection;
+use Symfony\Component\Console\Input\InputDefinition;
 
 class CommandsController extends Controller
 {
@@ -23,14 +27,70 @@ class CommandsController extends Controller
     /**
      * @return Collection
      */
-    protected function getCommands()
+    protected function getCommands(): Collection
     {
-        return collect($this->kernel->all())
-            ->only(config('anvil.commands'));
+        return collect($this->kernel->all())->only(config('anvil.commands'));
     }
 
-    protected function mapCommand($command, $name)
-    {
+    /**
+     * @param Command $command
+     *
+     * @return array
+     */
+    protected function generateForm(
+        Command $command,
+        string $name,
+        InputDefinition $definition
+    ): array {
+        $form = collect($definition->getArguments())
+            ->reduce(
+                function ($form, $argument) {
+                    $form[] = [
+                        'type' => 'argument',
+                        'name' => $argument->getName(),
+                        'isRequired' => $argument->isRequired(),
+                        'isArray' => $argument->isArray(),
+                        'default' => $argument->getDefault(),
+                        'description' => $argument->getDescription(),
+                    ];
+
+                    return $form;
+                },
+                []
+            );
+
+        $form = collect($definition->getOptions())
+            ->reduce(
+                function ($form, $option) {
+                    $form[] = [
+                        'type' => 'option',
+                        'name' => $option->getName(),
+                        'acceptValue' => $option->acceptValue(),
+                        'isValueRequired' => $option->isValueRequired(),
+                        'isValueOptional' => $option->isValueOptional(),
+                        'isArray' => $option->isArray(),
+                        'default' => $option->getDefault(),
+                        'description' => $option->getDescription(),
+                    ];
+
+                    return $form;
+                },
+                $form
+            );
+
+        return $form;
+    }
+
+    /**
+     * @param Command $command
+     * @param string $name
+     *
+     * @return array
+     */
+    protected function mapCommand(
+        Command $command,
+        string $name
+    ): array {
         $definition = $command->getDefinition();
 
         return [
@@ -42,12 +102,17 @@ class CommandsController extends Controller
                 'description' => $command->getDescription(),
                 'options' => $definition->getOptions(),
                 'arguments' => $definition->getArguments(),
+                'synopsis' => $definition->getSynopsis(),
+                'form' => $this->generateForm($command, $name, $definition),
             ],
             'created_at' => null,
         ];
     }
 
-    public function index()
+    /**
+     * @return JsonResponse
+     */
+    public function index(): JsonResponse
     {
         $sequence = 0;
 
@@ -74,8 +139,10 @@ class CommandsController extends Controller
 
     /**
      * @param string $command
+     *
+     * @return JsonResponse
      */
-    public function show(string $command)
+    public function show(string $command): JsonResponse
     {
         $command = $this
             ->getCommands()
