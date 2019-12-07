@@ -29,7 +29,18 @@ class CommandsController extends Controller
      */
     protected function getCommands(): Collection
     {
-        return collect($this->kernel->all())->only(config('anvil.commands'));
+        return collect($this->kernel->all())
+            // ->only(config('anvil.commands'))
+            ->filter(
+                function ($command) {
+                    return $command instanceof Command;
+                }
+            )
+            ->sortBy(
+                function ($command) {
+                    return $command->getName();
+                }
+            );
     }
 
     /**
@@ -48,8 +59,8 @@ class CommandsController extends Controller
                     $form[] = [
                         'type' => 'argument',
                         'name' => $argument->getName(),
-                        'isRequired' => $argument->isRequired(),
-                        'isArray' => $argument->isArray(),
+                        'required' => $argument->isRequired(),
+                        'array' => $argument->isArray(),
                         'default' => $argument->getDefault(),
                         'description' => $argument->getDescription(),
                     ];
@@ -66,9 +77,9 @@ class CommandsController extends Controller
                         'type' => 'option',
                         'name' => $option->getName(),
                         'acceptValue' => $option->acceptValue(),
-                        'isValueRequired' => $option->isValueRequired(),
-                        'isValueOptional' => $option->isValueOptional(),
-                        'isArray' => $option->isArray(),
+                        'required' => $option->isValueRequired(),
+                        'optional' => $option->isValueOptional(),
+                        'array' => $option->isArray(),
                         'default' => $option->getDefault(),
                         'description' => $option->getDescription(),
                     ];
