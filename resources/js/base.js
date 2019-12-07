@@ -4,7 +4,7 @@ import moment from 'moment-timezone';
 export default {
     computed: {
         Anvil() {
-            return Anvil;
+            return window.Anvil;
         },
     },
 

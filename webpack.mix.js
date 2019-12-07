@@ -1,5 +1,7 @@
 const mix = require('laravel-mix');
+const path = require('path');
 const webpack = require('webpack');
+const __dirname = path.resolve();
 
 /*
  |--------------------------------------------------------------------------

@@ -1,5 +1,4 @@
-uild
-composer.lock
+/composer.lock
 /node_modules
-vendor
-.phpunit.result.cache
+/.phpunit.result.cache
+/vendor

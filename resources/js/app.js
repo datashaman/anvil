@@ -18,7 +18,7 @@ Vue.use(VueRouter);
 
 window.Popper = require('popper.js').default;
 
-moment.tz.setDefault(Anvil.timezone);
+moment.tz.setDefault(window.Anvil.timezone);
 
 window.Anvil.basePath = '/' + window.Anvil.path;
 
