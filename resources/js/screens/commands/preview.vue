@@ -1,13 +1,24 @@
 <script type="text/ecmascript-6">
 import axios from 'axios';
+import { Terminal } from 'xterm';
+import { AttachAddon } from 'xterm-addon-attach';
 
 export default {
     data() {
         return {
             entry: null,
             form: {},
-            currentTab: 'form'
+            currentTab: 'terminal'
         };
+    },
+    mounted() {
+        setTimeout(() => {
+            const term = new Terminal();
+            const attachAddon = new AttachAddon(webSocket);
+            term.load(attachAddon);
+            term.open(this.$refs.terminal);
+            term.write('sup dog');
+        }, 500);
     },
     methods: {
         handleSubmit(evt) {
@@ -18,10 +29,10 @@ export default {
                 url: url,
                 data: this.form
             })
-            .then(function (response) {
+            .then((response) => {
                 this.alertSuccess(response.data.entry.output);
-            }.bind(this))
-            .catch(function (error) {
+            })
+            .catch((error) => {
                 console.error(error);
             });
         }
@@ -100,6 +111,15 @@ export default {
                             href="#"
                             v-on:click.prevent="currentTab = 'form'"
                             >Form</a
+                        >
+                    </li>
+                    <li class="nav-item">
+                        <a
+                            class="nav-link"
+                            :class="{ active: currentTab == 'terminal' }"
+                            href="#"
+                            v-on:click.prevent="currentTab = 'terminal'"
+                            >Terminal</a
                         >
                     </li>
                 </ul>
@@ -187,6 +207,12 @@ export default {
                                 Run
                             </button>
                         </form>
+                    </div>
+                    <div
+                        class="p-4 text-white"
+                        v-show="currentTab == 'terminal'"
+                    >
+                        <div ref="terminal"></div>
                     </div>
                 </div>
             </div>

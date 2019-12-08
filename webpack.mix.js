@@ -28,7 +28,6 @@ mix.options({
     .sass("resources/sass/app.scss", "public")
     .sass("resources/sass/app-dark.scss", "public")
     .version()
-    .copy("public", "../anviltest/public/vendor/anvil")
     .webpackConfig({
         resolve: {
             symlinks: false,

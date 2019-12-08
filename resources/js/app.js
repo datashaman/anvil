@@ -60,17 +60,5 @@ new Vue({
                 confirmationCancel: null
             }
         };
-    },
-
-    methods: {
-        autoLoadNewEntries() {
-            if (!this.autoLoadsNewEntries) {
-                this.autoLoadsNewEntries = true;
-                localStorage.autoLoadsNewEntries = 1;
-            } else {
-                this.autoLoadsNewEntries = false;
-                localStorage.autoLoadsNewEntries = 0;
-            }
-        }
     }
 });
