@@ -28,7 +28,7 @@ class CommandsController extends Controller
     {
         $commands = $this->service->getCommands();
 
-        return response()->json(
+        return new JsonResponse(
             [
                 'entries' => $commands,
             ]
@@ -44,7 +44,7 @@ class CommandsController extends Controller
     {
         $command = $this->service->getCommand($command);
 
-        return response()->json(
+        return new JsonResponse(
             [
                 'entry' => $command,
             ]

@@ -15,6 +15,11 @@ use Illuminate\Support\Str;
 class RunsController extends Controller
 {
     /**
+     * @var AnvilService
+     */
+    protected $service;
+
+    /**
      * @param AnvilService $service
      */
     public function __construct(AnvilService $service)
@@ -68,7 +73,7 @@ class RunsController extends Controller
         );
 
         if (!$run->exists) {
-            return response()->json(
+            return new JsonResponse(
                 [
                     'error' => 'Cannot store new run',
                     'status' => 'error',
@@ -78,7 +83,7 @@ class RunsController extends Controller
 
         dispatch(new AnvilJob($run));
 
-        return response()->json(
+        return new JsonResponse(
             [
                 'entry' => $run,
             ]
