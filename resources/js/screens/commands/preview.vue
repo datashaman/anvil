@@ -11,16 +11,27 @@ export default {
             currentTab: 'terminal'
         };
     },
-    methods: {
-        handleSubmit(evt) {
-            let url = window.Anvil.routes.runs_store.replace('%command%', this.entry.content.command);
+    mounted() {
+        setTimeout(() => {
+            let terminal = new Terminal();
             let channel = 'command.' + this.entry.content.command;
+            console.log('Listening to channel ' + channel);
 
             window.Echo
                 .private(channel)
                 .listen('.Datashaman\\Anvil\\AnvilOutput', (e) => {
-                    console.log(e);
+                    console.log('Received', e);
+                    terminal.write(e.message + (e.newline ? "\r\n" : ''));
                 });
+
+            terminal.open(this.$refs.terminal);
+            terminal.resize(80, 25);
+            terminal.clear();
+        }, 250);
+    },
+    methods: {
+        handleSubmit(evt) {
+            let url = window.Anvil.routes.runs_store.replace('%command%', this.entry.content.command);
 
             axios({
                 method: 'post',
@@ -28,7 +39,7 @@ export default {
                 data: this.form
             })
             .then((response) => {
-                console.log(response.data);
+                this.currentTab = 'terminal';
             })
             .catch(console.error);
         }
@@ -76,33 +87,6 @@ export default {
                     <li class="nav-item">
                         <a
                             class="nav-link"
-                            :class="{ active: currentTab == 'arguments' }"
-                            href="#"
-                            v-on:click.prevent="currentTab = 'arguments'"
-                            >Arguments</a
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <a
-                            class="nav-link"
-                            :class="{ active: currentTab == 'options' }"
-                            href="#"
-                            v-on:click.prevent="currentTab = 'options'"
-                            >Options</a
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <a
-                            class="nav-link"
-                            :class="{ active: currentTab == 'form-definition' }"
-                            href="#"
-                            v-on:click.prevent="currentTab = 'form-definition'"
-                            >Form Definition</a
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <a
-                            class="nav-link"
                             :class="{ active: currentTab == 'form' }"
                             href="#"
                             v-on:click.prevent="currentTab = 'form'"
@@ -120,30 +104,6 @@ export default {
                     </li>
                 </ul>
                 <div>
-                    <div
-                        class="code-bg p-4 mb-0 text-white"
-                        v-show="currentTab == 'arguments'"
-                    >
-                        <vue-json-pretty
-                            :data="slotProps.entry.content.arguments"
-                        ></vue-json-pretty>
-                    </div>
-                    <div
-                        class="code-bg p-4 mb-0 text-white"
-                        v-show="currentTab == 'options'"
-                    >
-                        <vue-json-pretty
-                            :data="slotProps.entry.content.options"
-                        ></vue-json-pretty>
-                    </div>
-                    <div
-                        class="code-bg p-4 mb-0 text-white"
-                        v-show="currentTab == 'form-definition'"
-                    >
-                        <vue-json-pretty
-                            :data="slotProps.entry.content.form"
-                        ></vue-json-pretty>
-                    </div>
                     <div class="p-4 mb-0" v-show="currentTab == 'form'">
                         <form @submit.prevent="handleSubmit">
                             <template
@@ -204,10 +164,7 @@ export default {
                             </button>
                         </form>
                     </div>
-                    <div
-                        class="p-4 text-white"
-                        v-show="currentTab == 'terminal'"
-                    >
+                    <div class="p-4" v-show="currentTab == 'terminal'">
                         <div ref="terminal"></div>
                     </div>
                 </div>
