@@ -2,6 +2,7 @@
 
 namespace Datashaman\Anvil\Http\Controllers;
 
+use Datashaman\Anvil\AnvilJob;
 use Datashaman\Anvil\AnvilService;
 use Datashaman\Anvil\Run;
 use Illuminate\Console\Command;
@@ -9,9 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
-use Symfony\Component\Console\Output\BufferedOutput;
 
 class RunsController extends Controller
 {
@@ -77,10 +76,7 @@ class RunsController extends Controller
             );
         }
 
-        $output = new BufferedOutput();
-        $run->exit_code = Artisan::call($command['id'], $input, $output);
-        $run->output = $output->fetch();
-        $run->save();
+        dispatch(new AnvilJob($run));
 
         return response()->json(
             [

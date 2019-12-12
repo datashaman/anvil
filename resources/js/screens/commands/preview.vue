@@ -11,18 +11,16 @@ export default {
             currentTab: 'terminal'
         };
     },
-    mounted() {
-        setTimeout(() => {
-            const term = new Terminal();
-            const attachAddon = new AttachAddon(webSocket);
-            term.load(attachAddon);
-            term.open(this.$refs.terminal);
-            term.write('sup dog');
-        }, 500);
-    },
     methods: {
         handleSubmit(evt) {
             let url = window.Anvil.routes.runs_store.replace('%command%', this.entry.content.command);
+            let channel = 'command.' + this.entry.content.command;
+
+            window.Echo
+                .private(channel)
+                .listen('.Datashaman\\Anvil\\AnvilOutput', (e) => {
+                    console.log(e);
+                });
 
             axios({
                 method: 'post',
@@ -30,11 +28,9 @@ export default {
                 data: this.form
             })
             .then((response) => {
-                this.alertSuccess(response.data.entry.output);
+                console.log(response.data);
             })
-            .catch((error) => {
-                console.error(error);
-            });
+            .catch(console.error);
         }
     }
 }

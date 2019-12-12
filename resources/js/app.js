@@ -5,6 +5,7 @@ import Routes from "./routes";
 import VueRouter from "vue-router";
 import VueJsonPretty from "vue-json-pretty";
 import moment from "moment-timezone";
+import Echo from "laravel-echo";
 
 require("bootstrap");
 
@@ -61,4 +62,13 @@ new Vue({
             }
         };
     }
+});
+
+console.log("here");
+
+window.io = require("socket.io-client");
+
+window.Echo = new Echo({
+    broadcaster: "socket.io",
+    host: window.location.hostname + ":6001"
 });
