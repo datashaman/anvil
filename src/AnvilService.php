@@ -48,13 +48,11 @@ class AnvilService
     }
 
     /**
-     * @param Command $command
+     * @param InputDefinition $definition
      *
      * @return array
      */
     protected function generateForm(
-        Command $command,
-        string $name,
         InputDefinition $definition
     ): array {
         $form = collect($definition->getArguments())
@@ -120,7 +118,7 @@ class AnvilService
                 'options' => $definition->getOptions(),
                 'arguments' => $definition->getArguments(),
                 'synopsis' => $definition->getSynopsis(),
-                'form' => $this->generateForm($command, $name, $definition),
+                'form' => $this->generateForm($definition),
             ],
             'created_at' => null,
         ];
